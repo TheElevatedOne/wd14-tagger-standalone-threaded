@@ -7,6 +7,10 @@ interrogators: Dict[str, Interrogator] = {
         'WD14 ViT v1',
         repo_id='SmilingWolf/wd-v1-4-vit-tagger'
     ),
+    'wd-convnext-v3': WaifuDiffusionInterrogator(
+        'WD ConvNeXT V3',
+        repo_id='SmilingWolf/wd-convnext-tagger-v3'
+    ),
     'wd14-vit.v2': WaifuDiffusionInterrogator(
         'WD14 ViT v2',
         repo_id='SmilingWolf/wd-v1-4-vit-tagger-v2',

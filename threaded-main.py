@@ -45,6 +45,16 @@ class Iterrogate():
             action='store_true',
             help='Overwrite caption file if it exists')
         parser.add_argument(
+            '--prepend',
+            type=str,
+            required=False,
+            help='Prepend custom tags, write in the style (with the quotes) "tag1, tag2, ..."')
+        parser.add_argument(
+            '--append',
+            type=str,
+            required=False,
+            help='Append custom tags, write in the style (with the quotes) "tag1, tag2, ..."')
+        parser.add_argument(
             '--cpu',
             action='store_true',
             help='Use CPU only')
@@ -91,6 +101,14 @@ class Iterrogate():
         for j in jobs:
             j.start()
 
+    def additional_tags(self, tags: str, typ: bool) -> str:
+        if tags is None:
+            return ""
+        tags = tags.split(", ")
+        if typ:
+            return ", ".join(tags)+", "
+        return ", "+(", ".join(tags))
+
     def directory_iter(self, job, chunk):
         d = op.abspath(self.args.dir) #
         for f in chunk:
@@ -108,7 +126,7 @@ class Iterrogate():
             print(f'processing: {image_path} | {"0"*(len(str(len(chunk)))-len(str(chunk.index(f)))+1)+str(chunk.index(f))}/{len(chunk)} | Job: {job}')
             tags = self.image_interrogate(Path(image_path))
 
-            tags_str = ', '.join(tags.keys())
+            tags_str = self.additional_tags(self.args.prepend, True)+(', '.join(tags.keys()))+self.additional_tags(self.args.append, False)
 
             with open(caption_path, 'w') as fp:
                 fp.write(tags_str)
