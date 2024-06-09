@@ -1,4 +1,4 @@
-# Multithreaded WD-14 Tagging Script with GPU support
+# Multithreaded WD14 Tagging Script with GPU support
 ---
 Forked from [https://github.com/corkborg/wd14-tagger-standalone](https://github.com/corkborg/wd14-tagger-standalone)
 ---
