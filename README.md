@@ -1,18 +1,17 @@
 # Multithreaded WD-14 Tagging Script with GPU support
 ---
 ## Install
-- Linux
-  - Preparation:
-    - Install Nvidia CUDA Toolkit from https://developer.nvidia.com/cuda-downloads
-    - Install Nvidia cuDNN from https://developer.nvidia.com/cudnn-downloads
-    - Set environment variable CUDA_PATH to your CUDA installation ex.
-    - ```echo 'export CUDA_PATH=/usr/local/cuda-12.4' >> ~/.bashrc```
-  - Easier option:
+- Preparation:
+  - Install Nvidia CUDA Toolkit from https://developer.nvidia.com/cuda-downloads
+  - Install Nvidia cuDNN from https://developer.nvidia.com/cudnn-downloads
+  - Set environment variable CUDA_PATH to your CUDA installation ex.
+  - ```echo 'export CUDA_PATH=/usr/local/cuda-12.4' >> ~/.bashrc```
+- Easier option:
 ```
 chmod +x setup.sh
 ./setup.sh
 ```
-  - Manual option:
+- Manual option:
 ```
 # Install dependencies
 sudo apt install -y python3 python3-pip python3-venv
@@ -24,12 +23,14 @@ pip install -r requirements.txt
 pip install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/
 # For CUDA 11 - pip install onnxruntime-gpu
 ```
-
-## usage
+## Usage
 
 ```
-usage: run.py [-h] (--dir DIR | --file FILE) [--threshold THRESHOLD] [--ext EXT] [--overwrite] [--cpu] [--rawtag] [--recursive] [--exclude-tag t1,t2,t3]
-              [--model {wd14-vit.v1,wd14-vit.v2,wd14-convnext.v1,wd14-convnext.v2,wd14-convnextv2.v1,wd14-swinv2-v1,wd-v1-4-moat-tagger.v2,wd-v1-4-vit-tagger.v3,wd-v1-4-convnext-tagger.v3,wd-v1-4-swinv2-tagger.v3,mld-caformer.dec-5-97527,mld-tresnetd.6-30000}]
+chmod +x wd14-tagger.sh
+> ./wd14-tagger.sh --help
+usage: threaded-main.py [-h] (--dir DIR | --file FILE) [--threshold THRESHOLD] [--ext EXT] [--overwrite] [--cpu] [--rawtag]
+                        [--model {wd14-vit.v1,wd14-vit.v2,wd14-convnext.v1,wd14-convnext.v2,wd14-convnextv2.v1,wd14-swinv2-v1,wd-v1-4-moat-tagger.v2,wd-v1-4-vit-tagger.v3,wd-v1-4-convnext-tagger.v3,wd-v1-4-swinv2-tagger.v3,mld-caformer.dec-5-97527,mld-tresnetd.6-30000}]
+                        [--threads THREADS]
 
 options:
   -h, --help            show this help message and exit
@@ -41,52 +42,57 @@ options:
   --overwrite           Overwrite caption file if it exists
   --cpu                 Use CPU only
   --rawtag              Use the raw output of the model
-  --recursive           Enable recursive file search
-  --exclude-tag t1,t2,t3
-                        Specify tags to exclude (Need comma-separated list)
   --model {wd14-vit.v1,wd14-vit.v2,wd14-convnext.v1,wd14-convnext.v2,wd14-convnextv2.v1,wd14-swinv2-v1,wd-v1-4-moat-tagger.v2,wd-v1-4-vit-tagger.v3,wd-v1-4-convnext-tagger.v3,wd-v1-4-swinv2-tagger.v3,mld-caformer.dec-5-97527,mld-tresnetd.6-30000}
-                        modelname to use for prediction (default is wd14-convnextv2.v1)
+                        Modelname to use for prediction (default is wd14-convnextv2.v1)
+  --threads THREADS     Ppecify the number of threads you want to run it with (multithreading)
 ```
 
-single file
+### Single file
 
 ```
-python run.py --file image.jpg
+./wd14-tagger.sh --file image.jpg
 ```
 
-batch execution
+### Batch execution
 
 ```
-python run.py --dir dir/dir
+./wd14-tagger.sh --dir dir/dir
 ```
 
-## Support Models
+### Multithreating
+```
+./wd14-tagger.sh --threads 2 --dir dir/dir
+```
+Multithreading works only with batch tagging
+With threads set at 2, the program will split the list of files into 2 lists (as the number of threads)
+```
+>>> import os
+>>> files = os.listdir()
+>>> files
+['file1','file2',...]
+>>> chunks(files, 2) # function uses the original list and the number of threads
+[['file1', 'file2',...], ['file99','file100',...]]
+```
+Then the tagging runs on the two lists separately
+The sideeffect (which don't really want to "fix") is that the tagger loads the model to the VRAM twice
+The model normally uses around 1.5GB of VRAM, so for two threads it will use around 3GB
+
+## Supported Models
 
 ```
-python run.py --file image.jpg --model wd14-vit.v1
-python run.py --file image.jpg --model wd14-vit.v2
-python run.py --file image.jpg --model wd14-convnext.v1
-python run.py --file image.jpg --model wd14-convnext.v2
-python run.py --file image.jpg --model wd14-convnextv2.v1
-python run.py --file image.jpg --model wd14-swinv2-v1
-python run.py --file image.jpg --model wd-v1-4-moat-tagger.v2
-python run.py --file image.jpg --model wd-v1-4-vit-tagger.v3
-python run.py --file image.jpg --model wd-v1-4-convnext-tagger.v3
-python run.py --file image.jpg --model wd-v1-4-swinv2-tagger.v3
-python run.py --file image.jpg --model mld-caformer.dec-5-97527
-python run.py --file image.jpg --model mld-tresnetd.6-30000
+./wd14-tagger.sh --file image.jpg --model wd14-vit.v1
+./wd14-tagger.sh --file image.jpg --model wd14-vit.v2
+./wd14-tagger.sh --file image.jpg --model wd14-convnext.v1
+./wd14-tagger.sh --file image.jpg --model wd14-convnext.v2
+./wd14-tagger.sh --file image.jpg --model wd14-convnextv2.v1
+./wd14-tagger.sh --file image.jpg --model wd14-swinv2-v1
+./wd14-tagger.sh --file image.jpg --model wd-v1-4-moat-tagger.v2
+./wd14-tagger.sh --file image.jpg --model wd-v1-4-vit-tagger.v3
+./wd14-tagger.sh --file image.jpg --model wd-v1-4-convnext-tagger.v3
+./wd14-tagger.sh --file image.jpg --model wd-v1-4-swinv2-tagger.v3
+./wd14-tagger.sh --file image.jpg --model mld-caformer.dec-5-97527
+./wd14-tagger.sh --file image.jpg --model mld-tresnetd.6-30000
 ```
-
-## Using GPU
-
-Requires CUDA 12.2 and cuDNN8.x.
-
-```
-pip install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/
-```
-
-https://onnxruntime.ai/docs/install/
-https://onnxruntime.ai/docs/execution-providers/CUDA-ExecutionProvider.html#requirements
 
 ## Copyright
 
