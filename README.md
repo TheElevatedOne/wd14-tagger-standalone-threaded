@@ -1,4 +1,4 @@
-# Multithreaded WD-14 Tagging Script with GPU support
+# Multithreaded WD14 Tagging Script with GPU support
 ---
 Forked from [https://github.com/corkborg/wd14-tagger-standalone](https://github.com/corkborg/wd14-tagger-standalone)
 ---
@@ -8,8 +8,9 @@ Forked from [https://github.com/corkborg/wd14-tagger-standalone](https://github.
 - [Single file](#single-file)
 - [Batch execution](#batch-execution)
 - [Multithreading](#multithreading)
-- [Supported Models](#supported-models)
 - [For fast use](#for-fast-use)
+- [Supported Models](#supported-models)
+- [Todo](#todo)
 - [Copyright](#copyright)
 ---
 ## Install
@@ -59,6 +60,7 @@ options:
                         Modelname to use for prediction (default is wd14-convnextv2.v1)
   --threads THREADS     Ppecify the number of threads you want to run it with (multithreading)
 ```
+The `main.py` file is without multithreading, keeping it just cause.
 
 ### Single file
 
@@ -110,6 +112,14 @@ The model normally uses around 1.5GB of VRAM, so for two threads it will use aro
 ./wd14-tagger.sh --file image.jpg --model mld-caformer.dec-5-97527
 ./wd14-tagger.sh --file image.jpg --model mld-tresnetd.6-30000
 ```
+
+## TODO
+- [x] Fork
+- [x] Add multithreading
+- [ ] Add "support" for windows and Install info
+- [ ] Add option to add custom tags
+- [ ] Add option to remove specified tags
+- [ ] Add option to prune the least used tags 
 
 ## Copyright
 
