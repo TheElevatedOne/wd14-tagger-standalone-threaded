@@ -42,8 +42,8 @@ pip install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.
 ```
 chmod +x wd14-tagger.sh
 > ./wd14-tagger.sh --help
-usage: threaded-main.py [-h] (--dir DIR | --file FILE) [--threshold THRESHOLD] [--ext EXT] [--overwrite] [--cpu] [--rawtag]
-                        [--model {wd14-vit.v1,wd14-vit.v2,wd14-convnext.v1,wd14-convnext.v2,wd14-convnextv2.v1,wd14-swinv2-v1,wd-v1-4-moat-tagger.v2,wd-v1-4-vit-tagger.v3,wd-v1-4-convnext-tagger.v3,wd-v1-4-swinv2-tagger.v3,mld-caformer.dec-5-97527,mld-tresnetd.6-30000}]
+usage: threaded-main.py [-h] (--dir DIR | --file FILE) [--threshold THRESHOLD] [--ext EXT] [--overwrite] [--prepend PREPEND] [--append APPEND] [--cpu] [--rawtag]
+                        [--model {wd14-vit.v1,wd-convnext-v3,wd14-vit.v2,wd14-convnext.v1,wd14-convnext.v2,wd14-convnextv2.v1,wd14-swinv2-v1,wd-v1-4-moat-tagger.v2,wd-v1-4-vit-tagger.v3,wd-v1-4-convnext-tagger.v3,wd-v1-4-swinv2-tagger.v3,mld-caformer.dec-5-97527,mld-tresnetd.6-30000}]
                         [--threads THREADS]
 
 options:
@@ -54,9 +54,11 @@ options:
                         Prediction threshold (default is 0.35)
   --ext EXT             Extension to add to caption file in case of dir option (default is .txt)
   --overwrite           Overwrite caption file if it exists
+  --prepend PREPEND     Prepend custom tags, write in the style (with the quotes) "tag1, tag2, ..."
+  --append APPEND       Append custom tags, write in the style (with the quotes) "tag1, tag2, ..."
   --cpu                 Use CPU only
   --rawtag              Use the raw output of the model
-  --model {wd14-vit.v1,wd14-vit.v2,wd14-convnext.v1,wd14-convnext.v2,wd14-convnextv2.v1,wd14-swinv2-v1,wd-v1-4-moat-tagger.v2,wd-v1-4-vit-tagger.v3,wd-v1-4-convnext-tagger.v3,wd-v1-4-swinv2-tagger.v3,mld-caformer.dec-5-97527,mld-tresnetd.6-30000}
+  --model {wd14-vit.v1,wd-convnext-v3,wd14-vit.v2,wd14-convnext.v1,wd14-convnext.v2,wd14-convnextv2.v1,wd14-swinv2-v1,wd-v1-4-moat-tagger.v2,wd-v1-4-vit-tagger.v3,wd-v1-4-convnext-tagger.v3,wd-v1-4-swinv2-tagger.v3,mld-caformer.dec-5-97527,mld-tresnetd.6-30000}
                         Modelname to use for prediction (default is wd14-convnextv2.v1)
   --threads THREADS     Ppecify the number of threads you want to run it with (multithreading)
 ```
@@ -111,13 +113,14 @@ The model normally uses around 1.5GB of VRAM, so for two threads it will use aro
 ./wd14-tagger.sh --file image.jpg --model wd-v1-4-swinv2-tagger.v3
 ./wd14-tagger.sh --file image.jpg --model mld-caformer.dec-5-97527
 ./wd14-tagger.sh --file image.jpg --model mld-tresnetd.6-30000
+./wd14-tagger.sh --file image.jpg --model wd-convnext-v3
 ```
 
 ## TODO
 - [x] Fork
 - [x] Add multithreading
+- [x] Add option to add custom tags
 - [ ] Add "support" for windows and Install info
-- [ ] Add option to add custom tags
 - [ ] Add option to remove specified tags
 - [ ] Add option to prune the least used tags 
 
