@@ -6,6 +6,7 @@
   - Install Nvidia cuDNN from https://developer.nvidia.com/cudnn-downloads
   - Set environment variable CUDA_PATH to your CUDA installation ex.
   - ```echo 'export CUDA_PATH=/usr/local/cuda-12.4' >> ~/.bashrc```
+
 - Easier option:
 ```
 chmod +x setup.sh
