@@ -60,7 +60,7 @@ options:
 ./wd14-tagger.sh --dir dir/dir
 ```
 
-### Multithreating
+### Multithreading
 ```
 ./wd14-tagger.sh --threads 2 --dir dir/dir
 ```
