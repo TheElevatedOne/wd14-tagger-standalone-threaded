@@ -2,6 +2,16 @@
 ---
 Forked from [https://github.com/corkborg/wd14-tagger-standalone](https://github.com/corkborg/wd14-tagger-standalone)
 ---
+# Navigation
+- ## [Install](#install)
+- ## [Usage](#usage)
+- ## [Single file](#single-file)
+- ## [Batch execution](#batch-execution)
+- ## [Multithreading](#multithreading)
+- ## [Supported Models](#supported-models)
+- ## [For fast use](#for-fast-use)
+- ## [Copyright](#copyright)
+---
 ## Install
 - Preparation:
   - Install Nvidia CUDA Toolkit from https://developer.nvidia.com/cuda-downloads
@@ -79,6 +89,10 @@ With threads set at 2, the program will split the list of files into 2 lists (as
 Then the tagging runs on the two lists separately
 The sideeffect (which don't really want to "fix") is that the tagger loads the model to the VRAM twice
 The model normally uses around 1.5GB of VRAM, so for two threads it will use around 3GB
+
+## For fast use
+- Option 1 - Use alias for the executable ex. `echo 'alias wd14-tagger=<path>/wd14-tagger-standalone-threaded/wd14-tagger.sh' >> ~/.bashrc`
+- Option 2 - Export the whole directory to path ex. `echo 'export PATH=<path>/wd14-tagger-standalone-threaded:$PATH' >> ~/.bashrc`
 
 ## Supported Models
 
