@@ -1,5 +1,7 @@
 # Multithreaded WD-14 Tagging Script with GPU support
 ---
+Forked from (https://github.com/corkborg/wd14-tagger-standalone)[https://github.com/corkborg/wd14-tagger-standalone]
+---
 ## Install
 - Preparation:
   - Install Nvidia CUDA Toolkit from https://developer.nvidia.com/cuda-downloads
