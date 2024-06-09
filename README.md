@@ -1,12 +1,27 @@
-
-forked from [https://github.com/picobyte/stable-diffusion-webui-wd14-tagger](https://github.com/picobyte/stable-diffusion-webui-wd14-tagger)
-
-## install
-
+# Multithreaded WD-14 Tagging Script with GPU support
+---
+## Install
+- Linux
+  - Preparation:
+    - Install Nvidia CUDA Toolkit from https://developer.nvidia.com/cuda-downloads
+    - Install Nvidia cuDNN from https://developer.nvidia.com/cudnn-downloads
+    - Set environment variable CUDA_PATH to your CUDA installation ex. `echo 'export CUDA_PATH=/usr/local/cuda-12.4' >> ~/.bashrc`
+  - Easier option:
 ```
-python -m venv venv
+chmod +x setup.sh
+./setup.sh
+```
+  - Manual option:
+```
+# Install dependencies
+sudo apt install -y python3 python3-pip python3-venv
+
+python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+# For CUDA 12
+pip install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/
+# For CUDA 11 - pip install onnxruntime-gpu
 ```
 
 ## usage
