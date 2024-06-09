@@ -2,15 +2,15 @@
 ---
 Forked from [https://github.com/corkborg/wd14-tagger-standalone](https://github.com/corkborg/wd14-tagger-standalone)
 ---
-# Navigation
-- ## [Install](#install)
-- ## [Usage](#usage)
-- ## [Single file](#single-file)
-- ## [Batch execution](#batch-execution)
-- ## [Multithreading](#multithreading)
-- ## [Supported Models](#supported-models)
-- ## [For fast use](#for-fast-use)
-- ## [Copyright](#copyright)
+## Navigation
+- [Install](#install)
+- [Usage](#usage)
+- [Single file](#single-file)
+- [Batch execution](#batch-execution)
+- [Multithreading](#multithreading)
+- [Supported Models](#supported-models)
+- [For fast use](#for-fast-use)
+- [Copyright](#copyright)
 ---
 ## Install
 - Preparation:
