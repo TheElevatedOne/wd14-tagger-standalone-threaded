@@ -59,6 +59,7 @@ options:
                         Modelname to use for prediction (default is wd14-convnextv2.v1)
   --threads THREADS     Ppecify the number of threads you want to run it with (multithreading)
 ```
+The `main.py` file is without multithreading, keeping it just cause.
 
 ### Single file
 
