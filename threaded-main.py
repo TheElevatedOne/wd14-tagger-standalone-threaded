@@ -45,6 +45,11 @@ class Iterrogate():
             default=0.35,
             help='Prediction threshold (default is 0.35)')
         parser.add_argument(
+            '--limit',
+            type=int,
+            default=100,
+            help='Limit the amount of tags to write in caption files (Custom tags are excluded)')
+        parser.add_argument(
             '--ext',
             default='.txt',
             choices=[".txt", ".caption"],
@@ -148,7 +153,7 @@ class Iterrogate():
             print(f'processing: {image_path} | {"0"*(len(str(len(chunk)))-len(str(chunk.index(f)+1)))+str(chunk.index(f)+1)}/{len(chunk)} | Job: {job}')
             tags = self.image_interrogate(Path(image_path))
 
-            tags_str = self.additional_tags(self.args.prepend, True)+(', '.join(tags.keys()))+self.additional_tags(self.args.append, False)
+            tags_str = self.additional_tags(self.args.prepend, True)+(', '.join(list(tags.keys())[:self.args.limit]))+self.additional_tags(self.args.append, False)
             with open(caption_path, 'w') as fp:
                 fp.write(tags_str)
             if f == chunk[-1]:
