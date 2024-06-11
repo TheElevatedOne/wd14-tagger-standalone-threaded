@@ -3,3 +3,4 @@ huggingface-hub==0.22.2
 Pillow==10.0.1
 deepdanbooru==1.0.2
 opencv-python==4.9.0.80
+send2trash
