@@ -22,29 +22,28 @@ class Iterrogate():
 
         if self.args.ext not in [".txt", ".caption"]:
             raise ValueError(f'"{self.args.ext}" is not a valid caption file extension')
+        if self.args.threshold > 1.0 or self.args.threshold < 0.0:
+            raise ValueError(f'{self.args.threshold} is not a valid value')
         if self.args.cpu:
             self.interrogator.use_cpu()
         if self.args.dir is not None:
             self.dir_thread_main()
             return
-        if self.args.file is not None and self.args.threads == "1":
-            self.file_iter()
-        else:
-            raise ValueError("Threads cannot be used alongside tagging a single file")
 
     def parse(self):
         parser = argparse.ArgumentParser()
 
-        group = parser.add_mutually_exclusive_group(required=True)
-        group.add_argument('--dir', help='Predictions for all images in the directory')
-        group.add_argument('--file', help='Predictions for one file')
-
+        parser.add_argument(
+            'dir',
+            type=str,
+            help="Directory of images you want to run tagger on")
         parser.add_argument(
             '--threshold',
             type=float,
             default=0.35,
-            help='Prediction threshold (default is 0.35)')
+            help='Prediction threshold (default is 0.35) [0.0 - 1.0]')
         parser.add_argument(
+            '-l',
             '--limit',
             type=int,
             default=100,
@@ -55,15 +54,18 @@ class Iterrogate():
             choices=[".txt", ".caption"],
             help='Extension to add to caption file in case of dir option (default is .txt)')
         parser.add_argument(
+            '-w',
             '--overwrite',
             action='store_true',
             help='Overwrite caption file if it exists')
         parser.add_argument(
+            '-tp',
             '--prepend',
             type=str,
             required=False,
             help='Prepend custom tags, write in the style (with the quotes) "tag1, tag2, ..."')
         parser.add_argument(
+            '-ta',
             '--append',
             type=str,
             required=False,
@@ -78,10 +80,11 @@ class Iterrogate():
             help='Use the raw output of the model')
         parser.add_argument(
             '--model',
-            default='wd14-convnextv2.v1',
+            default='wd-convnext-v3',
             choices=list(interrogators.keys()),
             help='Modelname to use for prediction (default is wd14-convnextv2.v1)')
         parser.add_argument(
+            '-t',
             "--threads",
             default=1,
             required=False,
@@ -161,13 +164,6 @@ class Iterrogate():
                 self.thread_time.append(time.time())
                 if self.position == (job+1):
                     self.time_taken()
-
-
-    def file_iter(self):
-        tags = self.image_interrogate(Path(self.args.file))
-        print()
-        tags_str = ', '.join(tags.keys())
-        print(tags_str)
 
 
 if __name__ == "__main__":
