@@ -1,0 +1,3 @@
+# NVIDIA GPUs, needs CUDA and cuDNN.
+-r requirements.txt
+onnxruntime-gpu

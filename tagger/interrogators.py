@@ -1,6 +1,12 @@
-from typing import List, Dict
+from typing import Dict
 
-from tagger.interrogator import Interrogator, WaifuDiffusionInterrogator, MLDanbooruInterrogator
+from tagger.interrogator import (
+    CamieTaggerInterrogator,
+    Interrogator,
+    MLDanbooruInterrogator,
+    PixAITaggerInterrogator,
+    WaifuDiffusionInterrogator,
+)
 
 interrogators: Dict[str, Interrogator] = {
     'wd14-vit.v1': WaifuDiffusionInterrogator(
@@ -49,6 +55,24 @@ interrogators: Dict[str, Interrogator] = {
         'WD14 SwinV2 v3',
         repo_id='SmilingWolf/wd-swinv2-tagger-v3'
     ),
+    'wd-vit-large-tagger-v3': WaifuDiffusionInterrogator(
+        'WD ViT-Large Tagger v3',
+        repo_id='SmilingWolf/wd-vit-large-tagger-v3'
+    ),
+    'wd-eva02-large-tagger-v3': WaifuDiffusionInterrogator(
+        'WD EVA02-Large Tagger v3',
+        repo_id='SmilingWolf/wd-eva02-large-tagger-v3'
+    ),
+    'z3d-e621-convnext-toynya': WaifuDiffusionInterrogator(
+        'Z3D-E621-Convnext(toynya)',
+        repo_id='toynya/Z3D-E621-Convnext',
+        tags_path='tags-selected.csv'
+    ),
+    'z3d-e621-convnext-silveroxides': WaifuDiffusionInterrogator(
+        'Z3D-E621-Convnext(silveroxides)',
+        repo_id='silveroxides/Z3D-E621-Convnext',
+        tags_path='tags-selected.csv'
+    ),
     'mld-caformer.dec-5-97527': MLDanbooruInterrogator(
         'ML-Danbooru Caformer dec-5-97527',
         repo_id='deepghs/ml-danbooru-onnx',
@@ -58,5 +82,22 @@ interrogators: Dict[str, Interrogator] = {
         'ML-Danbooru TResNet-D 6-30000',
         repo_id='deepghs/ml-danbooru-onnx',
         model_path='TResnet-D-FLq_ema_6-30000.onnx'
+    ),
+    'camie-tagger': CamieTaggerInterrogator(
+        'Camie Tagger',
+        repo_id='Camais03/camie-tagger',
+        model_path='model_initial.onnx',
+        tags_path='model_initial_metadata.json'
+    ),
+    'camie-tagger-v2': CamieTaggerInterrogator(
+        'Camie Tagger v2',
+        repo_id='Camais03/camie-tagger-v2',
+        model_path='camie-tagger-v2.onnx',
+        tags_path='camie-tagger-v2-metadata.json',
+        imagenet_norm=True
+    ),
+    'pixai-tagger-v0.9': PixAITaggerInterrogator(
+        'PixAI Tagger v0.9',
+        repo_id='deepghs/pixai-tagger-v0.9-onnx'
     ),
 }

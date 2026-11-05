@@ -1,0 +1,3 @@
+# AMD GPUs on Linux, needs ROCm and MIGraphX.
+-r requirements.txt
+onnxruntime-migraphx

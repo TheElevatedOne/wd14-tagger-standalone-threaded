@@ -1,6 +1,9 @@
-pandas==2.2.2
-huggingface-hub==0.22.2
-Pillow==10.0.1
-deepdanbooru==1.0.2
-opencv-python==4.9.0.80
-send2trash
+# onnxruntime is not listed here, because its builds can't be installed side by side.
+# GPU builds are in requirements-nvidia.txt and requirements-amd.txt.
+numpy>=1.26
+pandas>=2.2.3
+huggingface-hub>=0.28.1
+Pillow>=10.3.0
+opencv-python-headless>=4.9.0.80
+send2trash>=1.8.3
+tqdm>=4.66.3
